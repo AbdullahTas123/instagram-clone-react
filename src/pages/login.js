@@ -1,9 +1,10 @@
 import { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
 
+
 const login = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const { firebase } = useContext(FirebaseContext);
 
   const [emailAddress, setEmailAddress] = useState("");
@@ -19,9 +20,15 @@ const login = () => {
     document.title = "Login - Instagram";
   }, [])
   
-
   return (
-    <p>login</p>
+    <div className="container flex max-w-screen-md font-bold mx-auto items-center h-screen">
+      <div className="flex w-3/5">
+        <img src="images/instagram-iphone-icon.jpg" alt="iphone" />
+      </div>
+      <div className="flex flex-col w-2/5">
+        <p>The Form Area</p>
+      </div>
+    </div>
   )
 }
 
