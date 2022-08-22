@@ -5,6 +5,8 @@ import "./styles/app.css";
 
 
 const Login = lazy(() => import ("./pages/login")); // gerektiğinde yüklenecek
+const Signup = lazy(() => import ("./pages/sign-up")); // gerektiğinde yüklenecek
+
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <Suspense fallback={<p>Loading...</p>} >
         <Routes>
           <Route path={ROUTES.LOGIN} element={<Login />} />
+          <Route path={ROUTES.SIGN_UP} element={<Signup />} />
         </Routes>
       </Suspense>
     </Router>
