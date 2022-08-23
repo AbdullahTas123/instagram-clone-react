@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
 
-
 const login = () => {
   const navigate = useNavigate();
   const { firebase } = useContext(FirebaseContext);

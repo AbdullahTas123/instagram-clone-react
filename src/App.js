@@ -6,6 +6,7 @@ import "./styles/app.css";
 
 const Login = lazy(() => import ("./pages/login")); // gerektiğinde yüklenecek
 const Signup = lazy(() => import ("./pages/sign-up")); // gerektiğinde yüklenecek
+const NotFound = lazy(() => import ("./pages/not-found")); // gerektiğinde yüklenecek
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.SIGN_UP} element={<Signup />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </Router>

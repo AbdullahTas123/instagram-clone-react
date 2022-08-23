@@ -9,7 +9,7 @@ const SignUp = () => {
   const { firebase } = useContext(FirebaseContext);
 
   const [username, setUsername] = useState("");
-  const [fullname, setFullname] = useState("");
+  const [fullName, setFullName] = useState("");
   
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -22,10 +22,41 @@ const SignUp = () => {
     e.preventDefault();
 
     const usernameExists = await doesUsernameExist(username);
+    console.log("usernameExists: ", usernameExists);
+    if (!usernameExists.length) {
+      try {
+        const createdUserResult = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(emailAddress, password);
 
-    // try { 
-    // } catch (error) { 
-    // }
+        // authentication
+        // emailAddress & password & username (displayName)
+        await createdUserResult.user.updateProfile({
+          displayName: username 
+        });
+
+        // firebase user collection (create a document)
+        await firebase.firestore().collection("users").add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          following: [],
+          followers: [],
+          dateCreated: Date.now()
+        });
+        
+        navigate(ROUTES.DASHBOARD);
+      } catch (error) {
+        setFullName("");
+        setEmailAddress("");
+        setPassword("");
+        setError(error.message);
+      }
+    } else {
+      setError("That username is already used. please try another.");
+
+    }
   };
 
   useEffect(() => {
@@ -57,8 +88,8 @@ const SignUp = () => {
               type="text"
               placeholder="Full Name"
               className=" text-sm text-gray-base w-full py-5 px-4 h-2 border border-gray-primary rounded mb-2"
-              onChange={(e) => setFullname(e.target.value)}
-              value={fullname}
+              onChange={(e) => setFullName(e.target.value)}
+              value={fullName}
             />
             <input
               aria-label="Enter your amail address" 
